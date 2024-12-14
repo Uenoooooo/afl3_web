@@ -17,7 +17,6 @@ return new class extends Migration
             $table->date('payment_date'); 
             $table->string('payment_method');
             $table->string('image')->nullable(); 
-            $table->decimal('amount');
             $table->timestamps();
         });
     }

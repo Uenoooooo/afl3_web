@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Type;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class TypesSeeder extends Seeder
 {
@@ -14,10 +12,17 @@ class TypesSeeder extends Seeder
      */
     public function run(): void
     {
-        // Jadikan Array
-        // Tipe ini ada Meeting, Task, Bill, dll
-        DB::table('types')->insert([
-            ['type_id' => 1,'type_name' => 'Task']
-        ]);
+        $types = [
+            ['type_name' => 'Meeting'],
+            ['type_name' => 'Bill'],
+            ['type_name' => 'Task'],
+            ['type_name' => 'Assignment'],
+        ];
+
+        for ($i = 0; $i < 250; $i++) { 
+            foreach ($types as $type) {
+                Type::create($type);
+            }
+        }
     }
 }

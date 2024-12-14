@@ -13,34 +13,19 @@ return new class extends Migration
     {
         Schema::create('reminders', function (Blueprint $table) {
             $table->id();
-            
-            $table->foreignId('user_id')->nullable()->constrained(
-                table: 'users',
-                indexName: 'user_reminder_id'
-            );
-    
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->string('reminder_name');
             $table->text('reminder_desc')->nullable();
-    
-            $table->foreignId('type_id')->constrained(
-                table: 'types',
-                indexName: 'type_reminder_id'
-            );
-    
-            $table->decimal('reminder_amount')->nullable(); 
+            $table->foreignId(
+                'type_id'
+                )->default(1)->constrained('types')->onDelete('cascade');
+            $table->decimal('reminder_amount')->nullable();
             $table->date('start_date');
-
-            $table->timestamps(); 
-            $table->foreignId('frequency_id')->constrained(
-                table: 'frequencies',
-                indexName: 'frequency_reminder_id'
-            );
-    
-            $table->json('frequency_details')->nullable();
+            $table->foreignId('frequency_id')->constrained('frequencies')->onDelete('cascade');
+            $table->string('frequency_details')->nullable();
+            $table->timestamps();
         });
     }
-    
-    
 
     /**
      * Reverse the migrations.

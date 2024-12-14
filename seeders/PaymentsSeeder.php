@@ -2,31 +2,29 @@
 
 namespace Database\Seeders;
 
+use App\Models\Frequency;
 use App\Models\Payment;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class PaymentsSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $payments = [
+            ['payment_method' => 'Credit_Card'],
+            ['payment_method' => 'Bank_Transfer'],
+            ['payment_method' => 'COD'],
+            ['payment_method' => 'Cryptocurrency'],
+            ['payment_method' => 'E-Wallet'],
+        ];
 
-public function run(): void
-        {
-            Payment::create([
-                'payment_amount' => 75000, 
-                'payment_date' => now(), 
-                'payment_method' => 'Cash', 
-                'image' => 'image_path.jpg', 
-                'amount' => 75000, 
-            ]);
-            
-        DB::table('payments')->insert([
-            'payment_amount' => 50000, 
-            'payment_date' => now(), 
-            'payment_method' => 'Credit', 
-            'image' => 'image_image.jpg', 
-            'amount' => 50000, 
-        ]);
+        for ($i = 0; $i < 200; $i++) { 
+            foreach ($payments as $payment) {
+                Payment::create($payment);
+            }
+        }
     }
 }
-
