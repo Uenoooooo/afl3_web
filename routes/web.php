@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Logincontroller;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
 Route::get('/home', function () {
     return view('home');
@@ -28,6 +30,10 @@ Route::post('/home/updatedprofile', function () {
     return view('updatedProfile', compact('updatedData'));
 });
 
+Route::get('/login', function () {
+    return view('login');
+});
+
 Route::get('/home/updatedprofile', function () {
     return redirect('/home');
 });
@@ -43,3 +49,15 @@ Route::get('/bill', function () {
 Route::get('/kalender', function () {
     return view('kalender');
 });
+
+Route::middleware('auth')->get('/home', function () {
+    return view('home');
+});
+
+
+Route::get('login', [Logincontroller::class, 'showLoginForm'])->name('login');
+Route::post('login', [Logincontroller::class, 'login']);
+Route::get('register', [Logincontroller::class, 'showRegistrationForm'])->name('register');
+Route::post('register', [Logincontroller::class, 'register']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name('home');
