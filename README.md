@@ -17,6 +17,9 @@ The **Billing Reminder Website** is a Laravel-based application designed to simp
 - **Laravel**: Back-end framework for building the application.  
 - **Blade**: Templating engine for the front-end.  
 - **PHP**: Core programming language for the project.  
-- **MySQL**: Database management.  
-
+- **MySQL**: Database management.
+  
 ---
+
+## 👻 2 badut 
+
