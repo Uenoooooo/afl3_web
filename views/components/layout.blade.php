@@ -103,7 +103,7 @@
                     <div class="icon-container">
                         <i class="fa-solid fa-money-bill-wave"></i>
                     </div>
-                    <a href="/bills" class="ml-3">My Bills</a>
+                    <a href="/bill" class="ml-3">My Bills</a>
                 </li>
                 <li class="flex items-center block py-2 px-4 text-gray-300 mb-4 mr-2">
                     <div class="icon-container">
