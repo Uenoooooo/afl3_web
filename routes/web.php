@@ -1,46 +1,19 @@
 <?php
 
-use App\Http\Controllers\Logincontroller;
+use App\Http\Controllers\logincontroller;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+use App\Models\Reminder;
+use App\Http\Controllers\ReminderController;
+use App\Http\Controllers\UserController;
+
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::get('/home', function () {
     return view('home');
-});
+})->name('home');
 
-Route::get('/home/editprofile', function () {
-    $userData = [
-        'full_name' => 'John Doe',
-        'username' => 'johndoe123',
-        'phone_number' => '081234567890',
-        'address' => '123 Main Street',
-        'email' => 'johndoe@example.com',
-    ];
-    return view('editprofile', compact('userData'));
-});
-
-Route::post('/home/updatedprofile', function () {
-    $updatedData = [
-        'full_name' => request('full_name'),
-        'username' => request('username'),
-        'phone_number' => request('phone_number'),
-        'address' => request('address'),
-        'email' => request('email'),
-    ];
-    return view('updatedProfile', compact('updatedData'));
-});
-
-Route::get('/login', function () {
-    return view('login');
-});
-
-Route::get('/home/updatedprofile', function () {
-    return redirect('/home');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
 
 Route::get('/bill', function () {
     return view('bill');
@@ -50,14 +23,27 @@ Route::get('/kalender', function () {
     return view('kalender');
 });
 
-Route::middleware('auth')->get('/home', function () {
-    return view('home');
-});
+Route::resource("/User", UserController::class);
 
 
-Route::get('login', [Logincontroller::class, 'showLoginForm'])->name('login');
-Route::post('login', [Logincontroller::class, 'login']);
-Route::get('register', [Logincontroller::class, 'showRegistrationForm'])->name('register');
-Route::post('register', [Logincontroller::class, 'register']);
+Route::get('/bill', [ReminderController::class, 'index']);
+
+Route::get('/reminders/events', [ReminderController::class, 'getCalendarEvents']);
+
+
+Route::get('/login', function () {
+    return view('login'); // Halaman login
+})->name('login.form');
+
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+
+Route::get('/register', function () {
+    return view('register'); // Halaman registrasi
+})->name('register.form');
+
+Route::post('/register', [logincontroller::class, 'register'])->name('register');
+
+Route::get('/profile', [UserController::class, 'showProfile'])->name('profile');
+Route::put('/profile/{id}', [UserController::class, 'updateProfile'])->name('profile.update');
+
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name('home');
