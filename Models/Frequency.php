@@ -9,7 +9,6 @@ class Frequency extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'frequency_id',
         'frequency_name'
     ];
 }

@@ -9,7 +9,6 @@ class Type extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'type_id',
         'type_name'
     ];
 }

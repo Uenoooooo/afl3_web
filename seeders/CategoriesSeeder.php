@@ -10,20 +10,25 @@ class CategoriesSeeder extends Seeder
     /**
      * Run the database seeds.
      */
+    // public function run(): void
+    // {
+    //     $categories = [
+    //         ['id' => 1, 'category_type' => 'Expense'],
+    //         ['id' => 2, 'category_type' => 'Investment'],
+    //         ['id' => 3, 'category_type' => 'Saving'],
+    //         ['id' => 4, 'category_type' => 'Loan'],
+    //         ['id' => 5, 'category_type' => 'Debt'],
+    //     ];
+
+    //     Category::insert($categories);
+    // }
+
     public function run(): void
     {
-        $categories = [
-            ['category_type' => 'Expense'],
-            ['category_type' => 'Investment'],
-            ['category_type' => 'Saving'],
-            ['category_type' => 'Loan'],
-            ['category_type' => 'Debt'],
-        ];
+        $categories = ['Expense', 'Investment', 'Saving', 'Loan', 'Debt'];
 
-        for ($i = 0; $i < 200; $i++) { 
-            foreach ($categories as $category) {
-                Category::create($category);
-            }
+        foreach ($categories as $category) {
+            Category::create(['cat' => $category]);
         }
     }
 }

@@ -10,20 +10,25 @@ class FrequenciesSeeder extends Seeder
     /**
      * Run the database seeds.
      */
+    // public function run(): void
+    // {
+    //     $frequencies = [
+    //         ['id' => 1, 'frequency_name' => 'One_Time'],
+    //         ['id' => 2, 'frequency_name' => 'Daily'],
+    //         ['id' => 3, 'frequency_name' => 'Weekly'],
+    //         ['id' => 4, 'frequency_name' => 'Monthly'],
+    //         ['id' => 5, 'frequency_name' => 'Yearly'],
+    //     ];
+
+    //     Frequency::insert($frequencies);
+    // }
+
     public function run(): void
     {
-        $frequencies = [
-            ['frequency_name' => 'One_Time'],
-            ['frequency_name' => 'Daily'],
-            ['frequency_name' => 'Weekly'],
-            ['frequency_name' => 'Monthly'],
-            ['frequency_name' => 'Yearly'],
-        ];
+        $frequencies = ['One Time', 'Daily', 'Weekly', 'Monthly', 'Yearly'];
 
-        for ($i = 0; $i < 200; $i++) { 
-            foreach ($frequencies as $frequency) {
-                Frequency::create($frequency);
-            }
+        foreach ($frequencies as $frequency) {
+            Frequency::create(['freq' => $frequency]);
         }
     }
 }

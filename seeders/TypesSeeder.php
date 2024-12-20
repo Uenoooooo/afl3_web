@@ -10,19 +10,24 @@ class TypesSeeder extends Seeder
     /**
      * Run the database seeds.
      */
+    // public function run(): void
+    // {
+    //     $types = [
+    //         ['id' => 1, 'type_name' => 'Meeting'],
+    //         ['id' => 2, 'type_name' => 'Bill'],
+    //         ['id' => 3, 'type_name' => 'Task'],
+    //         ['id' => 4, 'type_name' => 'Assignment'],
+    //     ];
+
+    //     Type::insert($types);
+    // }
+
     public function run(): void
     {
-        $types = [
-            ['type_name' => 'Meeting'],
-            ['type_name' => 'Bill'],
-            ['type_name' => 'Task'],
-            ['type_name' => 'Assignment'],
-        ];
+        $types = ['Meeting', 'Bill', 'Task', 'Assignment'];
 
-        for ($i = 0; $i < 250; $i++) { 
-            foreach ($types as $type) {
-                Type::create($type);
-            }
+        foreach ($types as $type) {
+            Type::create(['typ' => $type]);
         }
     }
 }

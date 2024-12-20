@@ -19,6 +19,8 @@ class RemindersSeeder extends Seeder
             'user_id' => 1, 
             'type_id' => 1, 
             'frequency_id' => 1, 
+            'category_id' => 1,
+            'payment_method_id' => 1
         ]);
     }
     

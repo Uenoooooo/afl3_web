@@ -1,30 +1,23 @@
 <?php
 
 namespace Database\Seeders;
-
-use App\Models\Frequency;
-use App\Models\Payment;
 use Illuminate\Database\Seeder;
+use App\Models\Payment;
+use App\Models\PaymentMethod;
 
 class PaymentsSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $payments = [
-            ['payment_method' => 'Credit_Card'],
-            ['payment_method' => 'Bank_Transfer'],
-            ['payment_method' => 'COD'],
-            ['payment_method' => 'Cryptocurrency'],
-            ['payment_method' => 'E-Wallet'],
-        ];
+        // Ambil semua metode pembayaran dari tabel `payment_methods`
+        $paymentMethods = PaymentMethod::all();
 
-        for ($i = 0; $i < 200; $i++) { 
-            foreach ($payments as $payment) {
-                Payment::create($payment);
-            }
+        foreach ($paymentMethods as $method) {
+            Payment::create([
+                'payment_method_id' => $method->id, // Referensi ke metode pembayaran
+                'payment_amount' => rand(10000, 1000000),
+                'payment_date' => now()->subDays(rand(0, 30)),
+            ]);
         }
     }
 }

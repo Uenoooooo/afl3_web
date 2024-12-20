@@ -4,31 +4,61 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Reminder extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'reminder_id',
         'reminder_name',
         'reminder_desc',
+        'type_id',
+        'frequency_id',
+        'category_id',
+        'payment_method_id',
         'reminder_amount',
         'start_date',
-        'created_at',
-        'updated_at',
-        'frequency_details'
+        'status',
     ];
 
- public function user(): BelongsTo{
-    return $this->belongsTo(User::class);
- }
-
- public function type(): BelongsTo{
-    return $this->belongsTo(Type::class);
- }
-
-public function frequency(): BelongsTo{
-    return $this->belongsTo(Frequency::class);
- }
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
+    }
+    
+    public function frequency()
+    {
+        return $this->belongsTo(Frequency::class);
+    }
+    
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+    
+    public function paymentMethod()
+    {
+        return $this->belongsTo(PaymentMethod::class);
+    }
+    
+    // Menambahkan accessor untuk mendapatkan nama lengkap type, frequency, dll
+    public function getTypeNameAttribute()
+    {
+        return $this->type ? $this->type->type_name : 'No type selected';
+    }
+    
+    public function getFrequencyNameAttribute()
+    {
+        return $this->frequency ? $this->frequency->frequency_name : 'No frequency selected';
+    }
+    
+    public function getCategoryNameAttribute()
+    {
+        return $this->category ? $this->category->category_type : 'No category selected';
+    }
+    
+    public function getPaymentMethodNameAttribute()
+    {
+        return $this->paymentMethod ? $this->paymentMethod->name : 'No payment method selected';
+    }
 }
