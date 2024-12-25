@@ -8,29 +8,24 @@
         <div id="calendar" class="bg-white shadow rounded p-4"></div>
     </div>
     
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
-            },
-            events: '/reminders/events', // Fetch events from the route
-            eventColor: '#2563eb', // Warna default event
-            eventDisplay: 'block',
-            eventClick: function(info) {
-                alert('Reminder: ' + info.event.title); // Contoh aksi klik event
-            }
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+    
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                events: '/reminders/events', // Fetch events from the route
+                eventColor: '#2563eb', // Default event color
+                eventDisplay: 'block'
+            });
+            calendar.render();
         });
-
-        calendar.render();
-    });
-</script>
-
+    </script>
     @endsection
     </x-layout>
     

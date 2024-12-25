@@ -1,65 +1,65 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
+
 
 class Logincontroller extends Controller
 {
-    public function showLoginForm()
+    public function login(Request $request)
     {
-        return view('login');
-    }
-
-    public function showRegistrationForm()
-    {
-        return view('register');
-    }
-
-    public function register(Request $request)
-    {
-        // Validasi input
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'phonenumber' => 'required|string|max:15',
-            'password' => 'required|string|min:8|confirmed',
+        $credentials = $request->validate([
+            'name' => 'required',
+            'password' => 'required',
         ]);
 
-        // Menyimpan pengguna baru
+        if (Auth::guard('web')->attempt($credentials, $request->boolean('remember'))) {
+            $request->session()->regenerate();
+
+            return redirect()->route('home');
+        }
+
+        return back()->withErrors([
+            'name' => 'The provided credentials do not match our records.',
+        ])->onlyInput('name');
+    }
+
+    
+    public function showForm()
+    {
+        return view('auth.register'); // Pastikan ada view register
+    }
+
+    // Menangani proses registrasi
+    public function register(Request $request)
+    {
+        // Validasi input pengguna
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255|unique:users,name',
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => 'required|string|min:8|confirmed', // pastikan password_confirmation ada di form
+        ]);
+
+        // Buat pengguna baru dengan hash password
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phonenumber' => $request->phonenumber,
-            'password' => Hash::make($request->password),
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']), // Hashing password
         ]);
 
         // Login otomatis setelah registrasi
         Auth::login($user);
 
-        // Redirect ke halaman home setelah login
-        return redirect()->route('home');
+        // Redirect ke halaman beranda atau halaman tujuan
+        return redirect()->route('home')->with('success', 'Registration successful!');
     }
-    public function login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
 
-        // Menggunakan Auth::attempt untuk melakukan login
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect()->intended('/'); // Redirect ke halaman yang dituju sebelumnya
-        }
-
-        return back()->withErrors(['email' => 'Invalid credentials.']); // Jika gagal
-    }
     public function logout()
     {
-        Auth::logout();
-        return redirect('/login');
+        Auth::logout(); // Logout user
+        return redirect('/login'); // Redirect ke halaman login setelah logout
     }
 }

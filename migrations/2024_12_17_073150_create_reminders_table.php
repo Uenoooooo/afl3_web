@@ -17,6 +17,7 @@ class CreateRemindersTable extends Migration
             $table->unsignedBigInteger('category_id')->nullable();
             $table->unsignedBigInteger('payment_method_id')->nullable();
             $table->decimal('reminder_amount', 15, 2)->nullable();
+            $table->decimal('total_paid', 15, 2)->default(0); // Tambahkan kolom total_paid
             $table->date('start_date');
             $table->string('status')->default('pending');
             $table->timestamps();

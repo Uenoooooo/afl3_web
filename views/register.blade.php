@@ -6,73 +6,128 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom Styles for hover and transition effects */
+        .input-focus:hover,
+        .input-focus:focus {
+            border-color: #3b82f6; /* Tailwind blue-500 */
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5); /* Blue glow effect */
+        }
+
+        .btn-hover:hover {
+            background-color: #3b82f6;
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
+        }
+
+        .container-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-input {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-hover {
+            transition: all 0.3s ease;
+        }
+
+        /* Error Message Styling */
+        .error-message {
+            background-color: #f9dcdc;
+            color: #d9534f;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: normal;
+            box-shadow: 0 4px 15px rgba(217, 53, 47, 0.4);
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        /* Fade-in effect for error message */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 
-<body class="bg-gray-100 h-screen flex items-center justify-center">
+<body class="bg-gray-100 flex items-center justify-center h-screen">
 
-    <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
-        <h2 class="text-2xl font-semibold text-center mb-6">Register</h2>
+    <!-- Register Form Container -->
+    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md container-hover">
 
-        <form method="POST" action="{{ route('register') }}">
+        <h1 class="text-3xl font-semibold text-center text-gray-700 mb-6">Register</h1>
+
+        <!-- Form Register -->
+        <form action="{{ route('register') }}" method="POST">
             @csrf
 
-            <!-- Full Name -->
-            <div class="mb-4">
-                <label for="name" class="block text-sm font-semibold text-gray-700">Full Name</label>
-                <input type="text" id="name" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                @error('name')
-                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <!-- Email -->
-            <div class="mb-4">
-                <label for="email" class="block text-sm font-semibold text-gray-700">Email</label>
-                <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                @error('email')
-                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <!-- Phone Number -->
-            <div class="mb-4">
-                <label for="phonenumber" class="block text-sm font-semibold text-gray-700">Phone Number</label>
-                <input type="text" id="phonenumber" name="phonenumber" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                @error('phonenumber')
-                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <!-- Password -->
-            <div class="mb-4">
-                <label for="password" class="block text-sm font-semibold text-gray-700">Password</label>
-                <input type="password" id="password" name="password" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                @error('password')
-                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <!-- Confirm Password -->
+            <!-- Username Input -->
             <div class="mb-6">
-                <label for="password_confirmation" class="block text-sm font-semibold text-gray-700">Confirm Password</label>
-                <input type="password" id="password_confirmation" name="password_confirmation" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                @error('password_confirmation')
-                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
-                @enderror
+                <label for="name" class="block text-gray-600 text-sm">Username</label>
+                <input type="text" id="name" name="name" value="{{ old('name') }}"
+                    class="w-full px-4 py-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 form-input input-focus"
+                    required>
             </div>
 
-            <!-- Register Button -->
-            <button type="submit" class="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <!-- Email Input -->
+            <div class="mb-6">
+                <label for="email" class="block text-gray-600 text-sm">Email</label>
+                <input type="email" id="email" name="email" value="{{ old('email') }}"
+                    class="w-full px-4 py-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 form-input input-focus"
+                    required>
+            </div>
+
+            <!-- Password Input -->
+            <div class="mb-6">
+                <label for="password" class="block text-gray-600 text-sm">Password</label>
+                <input type="password" id="password" name="password"
+                    class="w-full px-4 py-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 form-input input-focus"
+                    required>
+            </div>
+
+            <!-- Confirm Password Input -->
+            <div class="mb-6">
+                <label for="password_confirmation" class="block text-gray-600 text-sm">Confirm Password</label>
+                <input type="password" id="password_confirmation" name="password_confirmation"
+                    class="w-full px-4 py-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 form-input input-focus"
+                    required>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit"
+                class="w-full bg-blue-500 text-white py-3 rounded-lg focus:outline-none btn-hover">
                 Register
             </button>
         </form>
 
-        <!-- Login Link -->
-        <div class="mt-4 text-center">
-            <p class="text-sm">Already have an account? 
-                <a href="{{ route('login') }}" class="text-blue-500 font-semibold hover:text-blue-600">Login here</a>
-            </p>
+        <!-- Error Message -->
+        @if ($errors->any())
+        <div class="error-message">
+            <strong>Error:</strong>
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
+        @endif
+
+        <!-- Login Link -->
+        <p class="mt-6 text-center text-gray-600">Already have an account? <a href="{{ route('login.form') }}"
+                class="text-blue-500 hover:underline">Login here</a></p>
+
     </div>
 
 </body>

@@ -41,19 +41,17 @@ class ReminderController extends Controller
             'payment_method_id' => 'nullable|exists:payment_methods,id',
             'reminder_amount' => 'nullable|numeric|min:0',
             'start_date' => 'required|date|after_or_equal:today',
+            'status' => 'nullable|string|in:pending,completed',
         ]);
     
-        if (!$validated['type_id']) {
-            return redirect()->back()->withErrors(['type_id' => 'Please select a valid type']);
-        }
-        if (!$validated['frequency_id']) {
-            return redirect()->back()->withErrors(['frequency_id' => 'Please select a valid frequency']);
-        }
+        // Set default value for 'status' if not provided
+        $validated['status'] = $validated['status'] ?? 'pending';
     
         Reminder::create($validated);
     
         return redirect()->route('reminders.index')->with('success', 'Reminder created successfully.');
     }
+    
 
     public function edit(Reminder $reminder)
     {
@@ -77,6 +75,7 @@ class ReminderController extends Controller
             'payment_method_id' => 'nullable|exists:payment_methods,id',
             'reminder_amount' => 'nullable|numeric|min:0',
             'start_date' => 'required|date',
+            'status' => 'nullable|string|in:pending,completed',
         ]);
     
         if (!$validated['type_id']) {

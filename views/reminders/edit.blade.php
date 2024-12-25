@@ -35,7 +35,7 @@
                         @foreach ($types as $type)
                             <option value="{{ $type->id }}" 
                                 {{ old('type_id', $reminder->type_id) == $type->id ? 'selected' : '' }}>
-                                {{ $type->name }}
+                                {{ $type->typ }}
                             </option>
                         @endforeach
                     </select>
@@ -47,7 +47,7 @@
                         @foreach ($frequencies as $frequency)
                             <option value="{{ $frequency->id }}" 
                                 {{ old('frequency_id', $reminder->frequency_id) == $frequency->id ? 'selected' : '' }}>
-                                {{ $frequency->name }}
+                                {{ $frequency->freq }}
                             </option>
                         @endforeach
                     </select>
@@ -60,7 +60,7 @@
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}" 
                                 {{ old('category_id', $reminder->category_id) == $category->id ? 'selected' : '' }}>
-                                {{ $category->name }}
+                                {{ $category->cat }}
                             </option>
                         @endforeach
                     </select>
@@ -73,7 +73,7 @@
                         @foreach ($payment_methods as $payment_method)
                             <option value="{{ $payment_method->id }}" 
                                 {{ old('payment_method_id', $reminder->payment_method_id) == $payment_method->id ? 'selected' : '' }}>
-                                {{ $payment_method->name }}
+                                {{ $payment_method->paymeth }}
                             </option>
                         @endforeach
                     </select>
@@ -92,7 +92,7 @@
                 </div>
     
                 <div>
-                    <label for="start_date" class="block font-bold">Start Date:</label>
+                    <label for="start_date" class="block font-bold">Due Date:</label>
                     <input 
                         type="date" 
                         id="start_date" 
@@ -105,9 +105,9 @@
     
                 <div>
                     <label for="status" class="block font-bold">Status:</label>
-                    <select id="status" name="status" class="border border-gray-300 rounded w-full p-2" >
-                        <option value="pending" {{ old('status', $reminder->status) == 'pending' ? 'selected' : '' }}>Pending</option>
-                        <option value="completed" {{ old('status', $reminder->status) == 'completed' ? 'selected' : '' }}>Completed</option>
+                    <select id="status" name="status" class="border border-gray-300 rounded w-full p-2">
+                        <option value="pending" {{ old('status', isset($reminder) ? $reminder->status : 'pending') == 'pending' ? 'selected' : '' }}>Pending</option>
+                        <option value="completed" {{ old('status', isset($reminder) ? $reminder->status : 'pending') == 'completed' ? 'selected' : '' }}>Completed</option>
                     </select>
                 </div>
     

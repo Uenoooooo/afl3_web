@@ -19,6 +19,7 @@ class Reminder extends Model
         'reminder_amount',
         'start_date',
         'status',
+        'total_paid'
     ];
 
     public function type()
@@ -60,5 +61,10 @@ class Reminder extends Model
     public function getPaymentMethodNameAttribute()
     {
         return $this->paymentMethod ? $this->paymentMethod->name : 'No payment method selected';
+    }
+
+    public function getStatusLabelAttribute()
+    {
+        return ucfirst($this->status);
     }
 }
